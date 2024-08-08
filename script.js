@@ -1,7 +1,3 @@
-console.log("Hello Bud")
-
-
-
 function getComputerChoice() {
     let computerChoice = Math.floor(Math.random() * 3) + 1;
     return computerChoice;
@@ -26,42 +22,70 @@ function getHumanChoice() {
 let humanScore = 0;
 let computerScore = 0;
 
-// Rock = 1, Paper = 2, Scissor = 3;
-
 function playRound (humanChoice, computerChoice) {
     //user picks rock
+    let winner = null;
     if (humanChoice === 1 && computerChoice === 1) {
-        return console.log("Draw! Both of you picked rock.");
+        console.log("Draw! Both of you picked rock.");
     } else if (humanChoice === 1 && computerChoice === 2) {
-        return console.log("You lose. Your rock gets wrapped by paper");
+        console.log("You lose. Your rock gets wrapped by paper");
+        winner = 'computer';
     } else if (humanChoice === 1 && computerChoice === 3) {
-        return console.log("You win! Your rock smashes the scissor."), win;
+        console.log("You win! Your rock smashes the scissor.");
+        winner = "human";
     } 
     //user picks paper
     else if (humanChoice === 2 && computerChoice === 1) {
-        return console.log("You win! Your paper wraps the rock."), win;
-    }else if (humanChoice === 2 && computerChoice === 2) {
-        return console.log("Draw! Both of you picked scissor.");
-    }else if (humanChoice === 2 && computerChoice === 3) {
-        return console.log("You lose! Your paper gets cut by the scissor.");
+        console.log("You win! Your paper wraps the rock.");
+        winner = "human";
+    } else if (humanChoice === 2 && computerChoice === 2) {
+        console.log("Draw! Both of you picked scissor.");
+    } else if (humanChoice === 2 && computerChoice === 3) {
+        console.log("You lose! Your paper gets cut by the scissor.");
+        winner = 'computer';
     }
     //user picks scissor
     else if (humanChoice === 3 && computerChoice === 1) {
-        return console.log("You lose! Your scissor gets smashed by the rock.");
+        console.log("You lose! Your scissor gets smashed by the rock.");
+        winner = 'computer';
     }else if (humanChoice === 3 && computerChoice === 2) {
-        return console.log("You win! Your scissor cuts the paper."), win;
+        console.log("You win! Your scissor cuts the paper.");
+        winner = "human";
     }else if (humanChoice === 3 && computerChoice === 3) {
-        return console.log("Draw! Both of you picked the same");
+        console.log("Draw! Both of you picked the same");
+    }
+
+    if(winner == "human"){
+        humanScore++;
+    }
+    if(winner == "computer"){
+        computerScore++;
     }
 }
 
-//const humanSelection = getHumanChoice();
-//const computerSelection = getComputerChoice();
 
-const humanChoice = getHumanChoice();
-const computerChoice = getComputerChoice();
+function playGame() {
+    let i=0;
+    do {
+        i++;
+        console.log("--- Round "+i);
+        let humanChoice = getHumanChoice();
+        let computerChoice = getComputerChoice();
+        playRound(humanChoice, computerChoice);
+        console.log("--- Scoreboard --- You: "+humanScore+" --- Computer: "+computerScore);
+    } while (i<5);
+    if (humanScore > computerScore){
+        console.log("GG You win!")
+    }
+    if (humanScore < computerScore) {
+        console.log("You lose. Better luck next time!");
+    }
+    
+    if (humanScore == computerScore) {
+        console.log("Draw. Try another round!")
+    }
+}
 
-const win = getHumanChoice();
-const lose = getHumanChoice();
+playGame();
 
-playRound(humanChoice, computerChoice);
+
