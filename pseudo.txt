@@ -1,0 +1,32 @@
+Rock Paper Scissor game - Pseudo code
+
+Output: "Pick Rock Paper Scissor"
+Userinput "";
+
+PC decision:
+random number between 1 and 3;
+if 1 = Rock;
+if 2 = Paper;
+if 3 = Scissor;
+
+userinput vs pc decision
+Rock and Rock = draw;
+Rock and Paper = lose;
+Rack and Scissor = win;
+
+Paper and Rock = win;
+paper and paper = draw;
+paper and Scissor = lose;
+
+Scissor and rock = lose;
+scissor and paper = win;
+scissor and scissor = draw;
+
+
+Scoreboard
+
+if draw = 0;
+if User wins = Userscore + 1;
+if NPC wins = NPC score +1;
+
+return to Userinput for another game

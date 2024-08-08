@@ -1,0 +1,1 @@
+A project for ODIN Project participants to exercise JS. This is my try to make a Rock-Paper-Scissor game.
