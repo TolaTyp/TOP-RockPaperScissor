@@ -1,29 +1,115 @@
-function getComputerChoice() {
-    let computerChoice = Math.floor(Math.random() * 3) + 1;
-    return computerChoice;
-}
+const buttons = document.querySelectorAll("button");
+const logic = document.querySelector("#logic");
+const humanScoreText = document.querySelector("#humanScore");
+const computerScoreText = document.querySelector("#computerScore");
+const restartButton = document.querySelector("#restartButton");
 
-console.log(getComputerChoice());
+restartButton.style.display = "none";
+
+buttons.forEach((button)=>
+    button.addEventListener("click", () => {
+        playGame(button.id);
+    })
+);
+
+let computerScore = 0;
+let humanScore = 0;
+
+restartButton.addEventListener("click", () => {
+    humanScore = 0;
+    computerScore = 0;
+    buttons.forEach((button) =>
+        button.style.display ="initial")
+    restartButton.style.display = "none";
+    humanScoreText.textContent = humanScore;
+    computerScoreText.textContent = computerScore;
+    logic.textContent = "";
+});
+
+function getComputerChoice() {
+    const choice = Math.round(Math.random() * 2);
+    if (choice === 0) {
+        console.log("Computer chooses: " + choice);
+        return "rock";
+    }
+    if (choice === 1) {
+        console.log("Computer chooses: " + choice);
+        return "paper";
+    }
+    if (choice === 2) {
+        console.log("Computer chooses: " + choice);
+        return "scissor";
+    }
+};
 
 function getHumanChoice() {
     let humanChoice = prompt("Please enter rock, paper or scissor");
     humanChoice = humanChoice.toLowerCase();
-    if(humanChoice === 'rock') {
-        humanChoice = 1;
-    } else if (humanChoice === 'paper'){
-        humanChoice = 2;
-    } else if (humanChoice === 'scissor') {
-        humanChoice = 3;
-    }
+    console.log("You choose: " + humanChoice);
     return humanChoice;
 }
 
 
-let humanScore = 0;
-let computerScore = 0;
-
 function playRound (humanChoice, computerChoice) {
     //user picks rock
+    let outputText = "";
+    if (humanChoice === computerChoice) {
+        outputText = ("Draw! Both of you picked "+humanChoice+".");
+    }
+    if (humanChoice === "rock" && computerChoice === "paper"){
+        outputText = ("You lose. Your rock gets wrapped by paper.");
+        computerScore++;
+    }
+    if (humanChoice === "rock" && computerChoice === "scissor"){
+        outputText = ("You win! Your rock smashes the scissor.");
+        humanScore++;
+    }
+    if (humanChoice === "paper" && computerChoice === "scissor"){
+        outputText = ("You lose! Your paper gets cut by the scissor.");
+        computerScore++;
+    }
+    if (humanChoice ==="paper" && computerChoice === "rock") {
+        outputText = ("You win! Your paper wraps the rock.");
+        humanScore++;
+    }
+    if (humanChoice === "scissor" && computerChoice === "rock"){
+        outputText = ("You lose! Your scissor gets smashed by the rock.");
+        computerScore++;
+    }
+    if (humanChoice ==="scissor" && computerChoice === "paper") {
+        outputText = ("You win! Your scissor cuts the paper.");
+        humanScore++;
+    }
+
+    logic.setAttribute('style', 'white-space: pre;');
+    logic.textContent = "Computer picks: " +computerChoice + "\r\n" + outputText + "\r\n";
+    humanScoreText.textContent = humanScore;
+    computerScoreText.textContent = computerScore;
+
+    if (humanScore >=5 || computerScore >= 5) {
+        buttons.forEach((button) => button.style.display = "none");
+
+        if (humanScore === 5){
+            logic.textContent += "GG! You win the game!\r\n";
+        }
+        if (computerScore === 5){
+            logic.textContent += "You lose the game. Better luck next time!\r\n"
+        }
+
+        restartButton.style.display = "initial";
+    }
+}
+
+function playGame(btnId) {
+    const humanSelect = btnId;
+    const computerSelect = getComputerChoice();
+    playRound(humanSelect, computerSelect); 
+}
+
+
+
+
+/*
     let winner = null;
     if (humanChoice === 1 && computerChoice === 1) {
         console.log("Draw! Both of you picked rock.");
@@ -66,14 +152,14 @@ function playRound (humanChoice, computerChoice) {
 
 function playGame() {
     let i=0;
-    do {
+    
         i++;
         console.log("--- Round "+i);
         let humanChoice = getHumanChoice();
         let computerChoice = getComputerChoice();
         playRound(humanChoice, computerChoice);
         console.log("--- Scoreboard --- You: "+humanScore+" --- Computer: "+computerScore);
-    } while (i<5);
+    
     if (humanScore > computerScore){
         console.log("GG You win!")
     }
@@ -87,5 +173,4 @@ function playGame() {
 }
 
 playGame();
-
-
+*/
